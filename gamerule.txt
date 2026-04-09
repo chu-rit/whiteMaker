@@ -1,0 +1,58 @@
+Game Specification: Color Mix 2048 (Working Title)
+1. Core Logic: Additive Color Mixing (Bitwise)
+이 게임은 빛의 삼원색(RGB) 합성 원리를 따르며, 모든 로직은 3비트 플래그로 처리함.
+
+Base Colors (Level 1): * Red (R) = 001 (1)
+
+Green (G) = 010 (2)
+
+Blue (B) = 100 (4)
+
+Secondary Colors (Level 2):
+
+Yellow (Y) = R | G = 011 (3)
+
+Magenta (M) = R | B = 101 (5)
+
+Cyan (C) = G | B = 110 (6)
+
+Final Goal (Level 3):
+
+White (W) = R | G | B = 111 (7)
+
+2. Move & Merge Rules
+Input: 사용자의 상/하/좌/우 전체 스와이프.
+
+Movement: 2048 방식과 동일하게 지정된 방향으로 모든 블록이 끝까지 밀림.
+
+Merge Condition: 두 블록이 충돌할 때, **'공통된 비트가 없는 경우'**에만 합쳐짐.
+
+Merge Check: (A.color & B.color) === 0 이면 합체 가능.
+
+합체 결과: NewColor = A.color | B.color.
+
+Exclusion: 이미 같은 색을 포함하고 있다면(예: Yellow와 Red) 합쳐지지 않고 그냥 겹침/막힘 처리됨.
+
+White Event: 블록의 값이 7(White)이 되는 순간, 즉시 점수를 획득하고 해당 칸은 비워짐 (Poof animation).
+
+3. Progressive System (The "Juice")
+단순 반복을 피하기 위한 성취감 시스템:
+
+Energy Gauge: White가 터질 때마다 상단 Cleanse Gauge가 상승.
+
+Stage Clear: 게이지 100% 달성 시 현재 스테이지 클리어 및 다음 테마(배경/이펙트 변경)로 전환.
+
+Combo Bonus: 한 번의 스와이프에 White가 다수 터질 시 게이지 가중치 부여.
+
+4. Technical Requirements (For AI Developer)
+Grid: 4x4 2D Array (또는 1D Array 16칸).
+
+Spawn: 스와이프 후 빈 칸 중 하나에 1(R), 2(G), 4(B) 중 하나를 랜덤 스폰 (확률 1:1:1).
+
+Game Over: 더 이상 이동이나 합성이 불가능한 상태(모든 칸이 찼을 때).
+
+UI: 각 비트 값에 매칭되는 CSS Color/Glow 효과 적용.
+
+위 룰을 바탕으로 reactnative를 사용해서 web,ios,aos 다 돌아가야해
+4x4 그리드 이동 로직과 비트 연산 합성 로직을 먼저 구현해 줘.
+애니메이션보다는 로직이 정확하게 돌아가는 게 우선이야
