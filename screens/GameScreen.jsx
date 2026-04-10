@@ -138,7 +138,7 @@ export default function GameScreen() {
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: (_, gestureState) => {
         const { dx, dy } = gestureState;
-        return Math.abs(dx) > 20 || Math.abs(dy) > 20;
+        return Math.abs(dx) > 30 || Math.abs(dy) > 30;
       },
       onPanResponderRelease: (_, gestureState) => {
         const { dx, dy } = gestureState;
