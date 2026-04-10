@@ -43,12 +43,6 @@ export default function GameScreen() {
   const pendingMergesRef = useRef([]);
   const pendingPoofsRef = useRef([]);
   
-  // Ref to always access latest handleMove in panResponder
-  const handleMoveRef = useRef(handleMove);
-  useEffect(() => {
-    handleMoveRef.current = handleMove;
-  }, [handleMove]);
-  
   const handleMove = useCallback((direction) => {
     if (animating) return; // Prevent moves during animation
     
@@ -90,6 +84,12 @@ export default function GameScreen() {
       }, 250);
     }
   }, [tiles, animating]);
+  
+  // Ref to always access latest handleMove in panResponder
+  const handleMoveRef = useRef(handleMove);
+  useEffect(() => {
+    handleMoveRef.current = handleMove;
+  }, [handleMove]);
 
   const handleReset = () => {
     const initial = createInitialState();
