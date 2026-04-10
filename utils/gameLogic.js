@@ -112,17 +112,18 @@ function processLineWithTiles(tiles, lineIndices, direction) {
       // Update current tile value
       current.value = mergedValue;
       
+      // Check if white (7) was formed BEFORE modifying index
+      if (mergedValue === 7) {
+        score += 100;
+        whites.push(i);
+      }
+      
       // Mark next tile for removal after slide
       poofs.push({ tileId: next.id });
       
       // Remove from lineTiles for position calculation
       lineTiles.splice(i + 1, 1);
-      
-      // Check if white (7) was formed
-      if (mergedValue === 7) {
-        score += 100;
-        whites.push(i);
-      }
+      i--; // Check if merged tile can merge with next
     }
   }
   
